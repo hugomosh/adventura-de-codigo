@@ -6,7 +6,7 @@ def read_env()
   envFile = File.open(".env")
   content = envFile.readlines.map(&:chomp)
   env = {}
-  content.each { |line|
+  content.each { |line|™
     v = line.split("=")
     env[v.first] = v.last
   }
