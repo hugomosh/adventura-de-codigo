@@ -2,6 +2,7 @@ require "net/http"
 require "fileutils"
 require_relative "date"
 require_relative "2023/day01.rb"
+require_relative "2023/day02.rb"
 
 puts "Adventura de código"
 
@@ -31,25 +32,14 @@ def request_day(url)
     "COOKIE" => "session=" + $env["session"],
     "USER_AGENT" => "HUGO_ADVENTURA",
   })
-  res.body
+  return res.body
 end
 
-def is_digit?(s)
-  code = s.ord
-  "0".ord <= code && code <= "9".ord
-end
+def prepare_puzzle(date)
+  template = File.read("templae/puzzle_tempalte.rb")
+  content = template.gsbug("{year}", year.to_s).gsub("{day}", day.to_s)
 
-$text_digits = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-
-def to_value(text)
-  if is_digit? text
-    return text.to_i
-  elsif $text_digits.include?(text)
-    return $text_digits.index(text) + 1
-  else
-    puts text
-    throw "BAD INPUT "
-  end
+  File.write(date.class_path, content)
 end
 
 def main()
@@ -59,74 +49,29 @@ def main()
 
   info()
   year = 2023
-  day = 1
+  day = 2
   aoc_date = AOCDate.new(day, year)
 
   input = "ERROR: No input!"
-  puts "R eading %s" % aoc_date.file_path
+  puts "Reading %s" % aoc_date.input_file_path
 
-  if !File.exist?(aoc_date.file_path)
-    FileUtils.mkdir_p(File.dirname(aoc_date.file_path))
+  if !File.exist?(aoc_date.input_file_path)
+    FileUtils.mkdir_p(File.dirname(aoc_date.input_file_path))
     input = request_day(aoc_date.request_input_url)
-    puts "Creating %s" % aoc_date.file_path
-    File.open(aoc_date.file_path, "w") { |file| file.write(input) }
+    puts "Creating %s" % aoc_date.input_file_path
+    File.open(aoc_date.input_file_path, "w") { |file| file.write(input) }
     puts f
   else
     puts "Input file exists!"
-    f = File.open(aoc_date.file_path)
+    f = File.open(aoc_date.input_file_path)
     input = f.read
   end
   puts input.lines.take(10)
   puts "..."
 
-  aoc = Aoc2023d01.new()
+  aoc = Puzzle2023day02.new(input)
 
   aoc.run()
-
-  sum = 0
-
-  input.lines.each do |line|
-    i = 0
-    j = line.size - 1
-    while !is_digit?(line[i])
-      i += 1
-    end
-    while !is_digit?(line[j])
-      j -= 1
-    end
-    number = line[i] + line[j]
-    sum += number.to_i
-  end
-  puts sum
-
-  sum = 0
-
-  input.lines.each do |line|
-    scan = line.scan(/[0-9]/)
-    number = to_value(scan.first).to_s + to_value(scan.last).to_s
-    # puts "L: " + line
-    # puts scan.to_s
-    # puts number
-    sum += number.to_i
-  end
-  puts sum
-
-  #part 2
-  puts "Part 2"
-  sum = 0
-
-  # one|two|three|four|five|six|seven|eight|nine
-  input.lines.each do |line|
-    scan = line.scan(/(?=(one|two|three|four|five|six|seven|eight|nine|[0-9]))/).flatten
-    number = to_value(scan.first).to_s + to_value(scan.last).to_s
-    # puts "L: " + line
-    # puts scan.to_s
-    # puts number
-    sum += number.to_i
-  end
-  puts sum
-
-  # not 56322
 end
 
 main()
