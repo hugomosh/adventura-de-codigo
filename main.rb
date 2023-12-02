@@ -100,7 +100,7 @@ def main()
 
   info()
   year = 2019
-  day = 1
+  day = 2
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
