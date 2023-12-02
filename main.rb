@@ -1,8 +1,14 @@
 require "net/http"
 require "fileutils"
 require_relative "date"
-require_relative "2023/day01.rb"
-require_relative "2023/day02.rb"
+require "logger"
+logger = Logger.new(STDOUT)
+
+class AdventurasDeCodigo
+  def initialize
+    @logger = Logger.new(STDOUT)
+  end
+end
 
 puts "Adventura de código"
 
@@ -36,10 +42,55 @@ def request_day(url)
 end
 
 def prepare_puzzle(date)
-  template = File.read("templae/puzzle_tempalte.rb")
-  content = template.gsbug("{year}", year.to_s).gsub("{day}", day.to_s)
+  input = download_input(date)
+  load_puzzle_class(date)
+  watch_for_changes(date, input)
+end
 
+def load_puzzle_class(date)
+  unless Object.const_defined?(date.class_name)
+    create_puzzle_class(date)
+  end
+  require_relative date.class_path
+end
+
+def create_puzzle_class(date)
+  if File.exist?(date.class_path)
+    puts "File for class #{date.class_path} already exists."
+    return
+  end
+
+  template = File.read("template/puzzle_template.rb")
+  content = template.gsub("{year}", date.year.to_s).gsub("{day}", date.day.to_s)
+  FileUtils.mkdir_p(File.dirname(date.class_path))
   File.write(date.class_path, content)
+  puts "Created file: #{date.class_path}"
+end
+
+def download_input(date)
+  input = "ERROR: No input!"
+  puts "Reading %s" % date.input_file_path
+
+  if !File.exist?(date.input_file_path)
+    FileUtils.mkdir_p(File.dirname(date.input_file_path))
+    input = request_day(date.request_input_url)
+    puts "Creating %s" % date.input_file_path
+    f = File.open(date.input_file_path, "w") { |file| file.write(input) }
+  else
+    puts "Input file exists!"
+    f = File.open(date.input_file_path)
+    input = f.read
+  end
+
+  input
+end
+
+def watch_for_changes(date, input)
+  puts "Sorry, can't watch for changes yet!"
+  puts "But I can run the code fior #{date.class_name} once"
+
+  aoc = Object.const_get(date.class_name).new(input)
+  aoc.run()
 end
 
 def main()
@@ -48,30 +99,13 @@ def main()
   puts $env.has_key? "session"
 
   info()
-  year = 2023
-  day = 2
+  year = 2019
+  day = 1
   aoc_date = AOCDate.new(day, year)
 
-  input = "ERROR: No input!"
-  puts "Reading %s" % aoc_date.input_file_path
-
-  if !File.exist?(aoc_date.input_file_path)
-    FileUtils.mkdir_p(File.dirname(aoc_date.input_file_path))
-    input = request_day(aoc_date.request_input_url)
-    puts "Creating %s" % aoc_date.input_file_path
-    File.open(aoc_date.input_file_path, "w") { |file| file.write(input) }
-    puts f
-  else
-    puts "Input file exists!"
-    f = File.open(aoc_date.input_file_path)
-    input = f.read
-  end
-  puts input.lines.take(10)
-  puts "..."
-
-  aoc = Puzzle2023day02.new(input)
-
-  aoc.run()
+  prepare_puzzle(aoc_date)
 end
 
 main()
+
+adventura = AdventurasDeCodigo.new()
