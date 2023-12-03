@@ -99,8 +99,8 @@ def main()
   puts $env.has_key? "session"
 
   info()
-  year = 2019
-  day = 2
+  year = 2023
+  day = 3
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)

@@ -6,4 +6,9 @@ Expect mucho Spanglish.
 
 ## Todos
 
-- [ ] open freshly created files in editor
+- [x] Download input file
+- [x] Create class to solve puzzle of the day from a template
+- [x] Autoload the created puzzle classed
+- [ ] Watch for changes in file.
+- [ ] Wait for 9PM PT to auto download input.
+- [ ] Open freshly created files in editor
