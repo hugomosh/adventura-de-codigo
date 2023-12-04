@@ -5,7 +5,9 @@ class Puzzle{year}day{day}
     @original_text = original_text
   end
 
-  def parse_input()
+  def parse_input(original)
+    parsed = original
+    parsed
   end
 
   def solve_part_1(input)
@@ -21,7 +23,7 @@ class Puzzle{year}day{day}
   end
 
   def run()
-    input = @original_text
+    input = parse_input(@original_text)
     solution1 = solve_part_1(input)
     puts "Solution1: #{solution1}"
     solution2 = solve_part_2(input)
