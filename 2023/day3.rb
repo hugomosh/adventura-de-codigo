@@ -15,25 +15,21 @@ class Puzzle2023day3
     while i < input.length
       j = 0
       while j < input[i].length
+        # Is a number
         if (/\d/.match input[i][j])
-          # Is a number
           # Get the whole number
-          # find neighboards
-
           k = j
           while /\d/.match input[i][k + 1]
             k += 1
           end
 
+          # find neighboards
           number = input[i][j..k].join("").to_i
           if has_adjacent_symbol(input, i, j, k)
             res += number
           end
           j = k
         end
-        # if ((/[^0-9.]/).match(input[i][j]))
-        #   get_neighboards(input, i, j)
-        # end
         j += 1
       end
       i += 1
@@ -82,17 +78,6 @@ class Puzzle2023day3
         if (/\d/.match m[x][y])
           ind.push [x, y]
         end
-
-        # while y <= col + 1
-        #   puts [x, y].to_s
-        #     k = y
-        #     while /\d/.match m[x][y + 1]
-        #       k += 1
-        #     end
-        #     number = m[i][j..k].join("").to_i
-        #     res.add(number)
-        #     y = k
-        #   end
       end
     end
 
