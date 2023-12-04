@@ -2,6 +2,8 @@ require "net/http"
 require "fileutils"
 require_relative "date"
 require "logger"
+require "listen"
+
 logger = Logger.new(STDOUT)
 
 class AdventurasDeCodigo
@@ -44,6 +46,7 @@ end
 def prepare_puzzle(date)
   input = download_input(date)
   load_puzzle_class(date)
+  open_files(date)
   watch_for_changes(date, input)
 end
 
@@ -52,6 +55,10 @@ def load_puzzle_class(date)
     create_puzzle_class(date)
   end
   require_relative date.class_path
+end
+
+def open_files(date)
+  system("gp open #{date.input_file_path} #{date.class_path}")
 end
 
 def create_puzzle_class(date)
@@ -86,11 +93,25 @@ def download_input(date)
 end
 
 def watch_for_changes(date, input)
-  puts "Sorry, can't watch for changes yet!"
-  puts "But I can run the code fior #{date.class_name} once"
+  listener = Listen.to(File.dirname(date.input_file_path), File.dirname(date.class_path)) do |modified, added, removed|
+    puts "File updated! Rerunning your code..."
+    load date.class_path
 
-  aoc = Object.const_get(date.class_name).new(input)
-  aoc.run()
+    aoc = Object.const_get(date.class_name).new(input)
+    aoc.run()
+  end
+  puts "Que comience la adventura!"
+  puts "Watching for changes on #{File.dirname(date.input_file_path)}/ and #{File.dirname(date.class_path)}/. Press Ctrl+C to stop."
+
+  Signal.trap("INT") do
+    puts "\nAdventura terminada! "
+    system("gp open main.rb")
+
+    exit
+  end
+
+  listener.start
+  sleep
 end
 
 def main()

@@ -39,9 +39,10 @@ class Puzzle2023day4
   end
 
   def run()
+    puts "🎄 Puzzle 2023 4"
     input = parse_input(@original_text)
     solution1 = solve_part_1(input)
-    puts "Solution1: #{solution1}"
+    puts "Solution 1: #{solution1}"
     solution2 = solve_part_2(input)
     puts "Solution2: #{solution2}"
   end
