@@ -96,22 +96,31 @@ def watch_for_changes(date, input)
   listener = Listen.to(File.dirname(date.input_file_path), File.dirname(date.class_path)) do |modified, added, removed|
     puts "File updated! Rerunning your code..."
     load date.class_path
-
-    aoc = Object.const_get(date.class_name).new(input)
-    aoc.run()
+    begin
+      aoc = Object.const_get(date.class_name).new(input)
+      aoc.run()
+    rescue => e
+      puts "An unexpected error occurred: #{e.message}"
+      puts "Backtrace:\n#{e.backtrace.join("\n")}"
+    end
   end
   puts "Que comience la adventura!"
   puts "Watching for changes on #{File.dirname(date.input_file_path)}/ and #{File.dirname(date.class_path)}/. Press Ctrl+C to stop."
 
   Signal.trap("INT") do
     puts "\nAdventura terminada! "
-    system("gp open main.rb")
+    # system("gp open main.rb")
 
     exit
   end
 
   listener.start
   sleep
+end
+
+def run_day(date, input)
+  aoc = Object.const_get(date.class_name).new(input)
+  aoc.run()
 end
 
 def main()
@@ -121,7 +130,7 @@ def main()
 
   info()
   year = 2023
-  day = 4
+  day = 7
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
