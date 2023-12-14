@@ -279,13 +279,13 @@ def main()
 
   info()
   year = 2023
-  day = 12
+  day = 14
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
 end
 
-# main()
+main()
 
-adventura = AdventurasDeCodigo.new()
-adventura.run()
+#adventura = AdventurasDeCodigo.new()
+# adventura.run()
