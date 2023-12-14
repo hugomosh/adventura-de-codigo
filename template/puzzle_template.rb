@@ -7,7 +7,7 @@ class Puzzle{year}day{day}
   end
 
   def parse_input(original)
-    parsed = original
+    parsed = original.chomp
     original.lines {|l| l.split(" ")}
     parsed
   end
