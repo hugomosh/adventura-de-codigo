@@ -1,31 +1,32 @@
+# frozen_string_literal: true
+
 class AOCDate
   attr_accessor :year, :day
 
   def initialize(day = nil, year = nil)
-    ENV["TZ"] = "EST"
+    ENV['TZ'] = 'EST'
     today = Time.now
     @day = day
     @year = year
-    @year_day = [@year, @day]
   end
 
   def request_input_url
-    "https://adventofcode.com/%d/day/%d/input" % @year_day
+    format('https://adventofcode.com/%<year>d/day/%<day>d/input', year: @year, day: @day)
   end
 
   def input_file_path
-    "input/%d/day/%d.txt" % @year_day
+    format('input/%<year>d/day/%<day>d.txt', year: @year, day: @day)
   end
 
   def output_file_path
-    "output/%d/day/%d.out" % @year_day
+    format('output/%<year>d/day/%<day>d.out', year: @year, day: @day)
   end
 
   def class_path
-    "%d/day%d.rb" % @year_day
+    format('%<year>d/day%<day>d.rb', year: @year, day: @day)
   end
 
   def class_name
-    "Puzzle%dday%d" % @year_day
+    format('Puzzle%<year>dday%<day>d', year: @year, day: @day)
   end
 end

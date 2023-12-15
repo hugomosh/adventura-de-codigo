@@ -1,0 +1,6 @@
+tasks:
+  - before: bundle install
+
+vscode:
+  extensions:
+    - Shopify.ruby-lsp

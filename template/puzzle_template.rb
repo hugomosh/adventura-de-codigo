@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Solve AoC puzzle for the day {day} {year}
 class Puzzle{year}day{day}
   attr_accessor :original_text
 
