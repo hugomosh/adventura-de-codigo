@@ -6,12 +6,11 @@ class Puzzle{year}day{day}
 
   def initialize(original_text = nil)
     @original_text = original_text
-    
   end
 
   def parse_input(original)
     parsed = original.chomp
-    original.lines {|l| l.split(" ")}
+    original.lines { |l| l.split(" ") }
     parsed
   end
 

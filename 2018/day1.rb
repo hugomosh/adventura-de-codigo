@@ -1,4 +1,4 @@
-require "set"
+require 'set'
 
 class Puzzle2018day1
   attr_accessor :original_text
@@ -7,11 +7,10 @@ class Puzzle2018day1
     @original_text = original_text
   end
 
-  def parse_input()
-  end
+  def parse_input; end
 
   def solve_part_1(input)
-    puts "solve_part_1"
+    puts 'solve_part_1'
     res = 0
 
     input.lines.map(&:to_i).sum
@@ -24,13 +23,14 @@ class Puzzle2018day1
       input.lines.map(&:to_i).each do |change|
         res += change
         return res if set.include?(res)
+
         set.add(res)
       end
     end
     res
   end
 
-  def run()
+  def run
     input = @original_text
     solution1 = solve_part_1(input)
     puts "Solution1: #{solution1}"
