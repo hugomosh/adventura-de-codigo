@@ -3,4 +3,4 @@ tasks:
 
 vscode:
   extensions:
-    - Shopify.ruby-lsp
+    - castwide.solargraph

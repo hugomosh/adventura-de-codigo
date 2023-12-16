@@ -5,5 +5,6 @@ source "https://rubygems.org"
 # gem "rails"
 
 gem "listen", "~> 3.8"
-gem "ruby-lsp"
+# gem "ruby-lsp"
 gem "rubocop"
+gem "solargraph"

@@ -279,7 +279,7 @@ def main
 
   info
   year = 2023
-  day = 15
+  day = 16
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
