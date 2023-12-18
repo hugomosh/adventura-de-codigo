@@ -4,3 +4,4 @@ tasks:
 vscode:
   extensions:
     - castwide.solargraph
+    - jnbt.vscode-rufo
