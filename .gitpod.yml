@@ -1,5 +1,5 @@
 tasks:
-  - before: bundle install
+  - init: bundle install
 
 vscode:
   extensions:
