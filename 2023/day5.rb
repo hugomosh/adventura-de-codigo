@@ -50,6 +50,9 @@ class Puzzle2023day5
     solution2 = part2(input)
     puts "Part 2: #{solution2}"
   end
+
+  def test
+  end
 end
 
 class Map

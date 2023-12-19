@@ -144,11 +144,23 @@ class AdventurasDeCodigo
     end
   end
 
+  def time_until_9pm_est
+    current_time = Time.now
+    target_time = Time.new(current_time.year, current_time.month, current_time.day, 21, 0, 0, "-05:00") # 9:00 PM EST
+
+    target_time += 24 * 60 * 60 if current_time >= target_time
+
+    time_difference = target_time - current_time
+
+    format("%02d:%02d:%02d until 9:00 PM EST", time_difference / 3600, (time_difference % 3600) / 60, time_difference % 60)
+  end
+
   def start_day(date); end
 
   def wait_for_release
     loop do
-      sleep
+      putstime_until_9pm_est
+      sleep 10
     end
   end
 end
@@ -279,7 +291,7 @@ def main
 
   info
   year = 2023
-  day = 11
+  day = 19
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
@@ -287,5 +299,5 @@ end
 
 main
 
-# adventura = AdventurasDeCodigo.new()
-# adventura.run()
+# adventura = AdventurasDeCodigo.new
+# adventura.run
