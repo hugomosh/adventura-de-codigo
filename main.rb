@@ -207,7 +207,7 @@ def load_puzzle_class(date)
 end
 
 def open_files(date)
-  system("gp open #{date.input_file_path} #{date.class_path}")
+  system("code open #{date.input_file_path} #{date.class_path}")
 end
 
 def create_puzzle_class(date)
@@ -283,15 +283,19 @@ def run_day(date, input)
   aoc.run
 end
 
+begin
 $env = read_env
+rescue
+  puts "Failed to load env file. Check .env.demo and create `.env`."
 
+end
 def main
   puts $env
   puts $env.has_key? "session"
 
   info
   year = 2023
-  day = 19
+  day = 20
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
