@@ -284,18 +284,18 @@ def run_day(date, input)
 end
 
 begin
-$env = read_env
+  $env = read_env
 rescue
   puts "Failed to load env file. Check .env.demo and create `.env`."
-
 end
+
 def main
   puts $env
   puts $env.has_key? "session"
 
   info
   year = 2023
-  day = 20
+  day = 13
   aoc_date = AOCDate.new(day, year)
 
   prepare_puzzle(aoc_date)
